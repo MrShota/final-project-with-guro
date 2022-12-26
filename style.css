@@ -161,5 +161,10 @@ background-color: #C2D0E3;
 }
 .delete,
 .edit{
+
     cursor: pointer;
+}
+.wellcome-text{
+    width: 400px;
+    margin: 30% 20%;
 }

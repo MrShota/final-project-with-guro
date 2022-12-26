@@ -1,60 +1,71 @@
-const list = document.getElementById('employees-list');
-const userInfo = document.querySelector('.user-info');
-
+const API_URL = 'https://dummyjson.com';
+const wellcome = document.getElementById('wellcome-text')
 //*calling functions
 getUsersData();
-getId();
-getTodo(1); //* რომელ აიდისაც გადაცემ მოაქვს მისი ტასკები
+getTodoByUserId();
+selectUser();
+
+
+
+
 //*get all user from server
 function getUsersData() {
-    fetch('https://dummyjson.com/users')
+    fetch(`${API_URL}/users`)
         .then(response => response.json())
-        .then(allUser => {
-            renderUser(allUser.users);
+        .then((allUser) => allUser.users)
+        .then(_users => {
+            users = _users;
+            renderUser(users)
         })
+
 }
 //*render user by name and last name
 function renderUser(allUser) {
+    const usersList = document.getElementById('employees-list');
+    let singleUserInfo = '';
     for (let user of allUser) {
-        list.innerHTML += `
-             <div class='user-info' > 
-                  ${user.firstName}
-                  ${user.lastName}
-             </div >
-        `
+        singleUserInfo +=
+            `
+                <div class='user-info' onclick='selectUser(userId)' > 
+                     ${user.firstName}
+                     ${user.lastName}
+                </div >
+            `
     }
+    usersList.innerHTML = singleUserInfo
 }
-//*get id
-function getId() {
-    fetch('https://dummyjson.com/users')
-        .then(response => response.json())
-        .then(allId => {
-            // for (let id of allId.users){
-            //     getTodo(id)
 
-            // }
-        })
+function selectUser() {
+    // list.i.style.backgroundColor = 'rgb(20, 125, 170)';
+    header.style.display = 'none';
+    getTodoByUserId(userId)
 }
+
 //* get all todo's
-function getTodo(id) {
-    fetch(`https://dummyjson.com/todos/user/${id}`) 
+function getTodoByUserId(userId) {
+    fetch(`${API_URL}/todos/user/${userId}`)
         .then(response => response.json())
-        .then(allTodo => {
-            renderTodo(allTodo.todos)
+        .then((allTodo) => allTodo.todos)
+        .then(_todos => {
+            todos = _todos;
+            renderTodo(todos)
         });
 }
 function renderTodo(allTodo) {
+    const toDoList = document.getElementById('content');
+    let toDos = '';
     for (let todo of allTodo) {
-
-        content.innerHTML += `
+        toDos +=
+            `
             <form class='todo-form'>
-            <input type="checkbox" name="" id="">
-            <label class='todo-txt'>${todo.todo}</label>
-            <div class='icons'>
-            <span class="material-symbols-outlined icon delete">delete</span>
-            <span class="material-symbols-outlined icon edit">edit</span>
-            </div>
+                 <input type="checkbox" name="" id="">
+                 <label class='todo-txt'>${todo.todo}</label>
+                 <div class='icons'>
+                     <span class="material-symbols-outlined icon delete">delete</span>
+                     <span class="material-symbols-outlined icon edit">edit</span>
+                 </div>
             </form>
             `
     }
+    toDoList.innerHTML = toDos;
 }
