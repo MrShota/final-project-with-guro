@@ -168,3 +168,6 @@ background-color: #C2D0E3;
     width: 400px;
     margin: 30% 20%;
 }
+.completed{
+    text-decoration: line-through;
+}

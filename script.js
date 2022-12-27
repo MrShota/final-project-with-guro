@@ -1,11 +1,10 @@
 const API_URL = 'https://dummyjson.com';
 const wellcome = document.getElementById('wellcome-text')
+
 //*calling functions
 getUsersData();
+renderUser();
 getTodoByUserId();
-selectUser();
-
-
 
 
 //*get all user from server
@@ -17,7 +16,6 @@ function getUsersData() {
             users = _users;
             renderUser(users)
         })
-
 }
 //*render user by name and last name
 function renderUser(allUser) {
@@ -26,35 +24,39 @@ function renderUser(allUser) {
     for (let user of allUser) {
         singleUserInfo +=
             `
-                <div class='user-info' onclick='selectUser(userId)' > 
+                <div class='user-info' onclick='selectUser(${user.id}
+                    )' > 
                      ${user.firstName}
                      ${user.lastName}
                 </div >
             `
     }
-    usersList.innerHTML = singleUserInfo
+    usersList.innerHTML = singleUserInfo;
+    let userInfo = document.querySelector('.user-info');
+    //დინამიურად შექმნილი user-info შევინახე ცვლადში მაგრამ ამ ფუნქციის გარეთ არ მუშაობს და ქვემოთ, ფუნქციაში ფერს ვერ ვუცვლი
+    // console.log(userInfo)
 }
 
-function selectUser() {
-    // list.i.style.backgroundColor = 'rgb(20, 125, 170)';
-    header.style.display = 'none';
-    getTodoByUserId(userId)
+function selectUser(id) {
+    getTodoByUserId(id)
+    // userInfo.style.backgroundColor = 'rgb(20, 125, 170)';
 }
+
 
 //* get all todo's
-function getTodoByUserId(userId) {
-    fetch(`${API_URL}/todos/user/${userId}`)
+function getTodoByUserId(id) {
+    fetch(`${API_URL}/todos/user/${id}`)
         .then(response => response.json())
         .then((allTodo) => allTodo.todos)
         .then(_todos => {
             todos = _todos;
-            renderTodo(todos)
+            renderTodo(todos);
         });
-}
-function renderTodo(allTodo) {
-    const toDoList = document.getElementById('content');
-    let toDos = '';
-    for (let todo of allTodo) {
+    }
+    function renderTodo(allTodo) {
+        const toDoList = document.getElementById('content');
+        let toDos = '';
+        for (let todo of allTodo) {
         toDos +=
             `
             <form class='todo-form'>
