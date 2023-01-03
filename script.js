@@ -38,9 +38,9 @@ function renderUser(allUser) {
 function selectUser(id) {
     getTodoByUserId(id)
     const singleUser = document.querySelector(`single-user-info[data-id='${id}']`);
-    singleUser.classList.add('active'); // ამას წერს და რა ვუშველო? 
+    // singleUser.classList.add('active'); // ამას წერს და რა ვუშველო? 
     // Uncaught TypeError: Cannot read properties of null (reading 'classList')
-    console.log(singleUser)
+    console.log()
 }
 
 
@@ -62,13 +62,39 @@ function renderTodo(allTodo) {
             `
             <form class='todo-form'>
                  <input type="checkbox" name="" id="">
-                 <label class='todo-txt'>${todo.todo}</label>
+                 <label class='todo-txt' 
+                        data-id = 'tasks' >${todo.todo}</label>
                  <div class='icons'>
                      <span class="material-symbols-outlined icon delete">delete</span>
                      <span class="material-symbols-outlined icon edit">edit</span>
                  </div>
             </form>
             `
+        // console.log(todo.completed)
+        // if (todo.completed === true) {
+        // }
+        // let dlt = document.getElementsByClassName('delete')
+        // dlt.addEventListener('click', deleteTask(`${todo.todo}`))
     }
     toDoList.innerHTML = toDos;
+}
+
+//* add new todo 
+//ლოგიკურად ვითომ სწორია მაგრამ არ მუშაიბს :@
+let inputTodo = document.getElementById('input').innerText;
+const inputBtn = document.getElementsByClassName('input-btn');
+inputBtn.addEventListener('click', addNewTodo(inputTodo))
+
+function addNewTodo(todo) {
+    fetch(`${API_URL}/todos/add`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(todo)
+    })
+    .then(res => res.json())
+    .then(todo => {
+        todos.push(todo)
+        renderTodo()
+    });
+    
 }
