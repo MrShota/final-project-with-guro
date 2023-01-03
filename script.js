@@ -25,7 +25,7 @@ function renderUser(allUser) {
         singleUserInfo +=
             `
                 <div class='single-user-info' 
-                data-class='${user.id}'
+                data-id='${user.id}'
                 onclick='selectUser(${user.id})' >
                      ${user.firstName}
                      ${user.lastName}
