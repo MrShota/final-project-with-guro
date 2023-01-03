@@ -121,7 +121,7 @@ body {
     overflow-y: scroll;
 }
 
-.user-info {
+.single-user-info {
     display: flex;
     align-items: center;
     padding-left: 35px;
@@ -133,7 +133,7 @@ body {
 
 }
 
-.user-info:hover {
+.single-user-info:hover {
     background-color: var(--color-background);
 }
 
@@ -170,4 +170,7 @@ background-color: #C2D0E3;
 }
 .completed{
     text-decoration: line-through;
+}
+.active{
+    background-color: red;
 }

@@ -11,7 +11,7 @@ getTodoByUserId();
 function getUsersData() {
     fetch(`${API_URL}/users`)
         .then(response => response.json())
-        .then((allUser) => allUser.users)
+        .then(allUser => allUser.users)
         .then(_users => {
             users = _users;
             renderUser(users)
@@ -24,22 +24,23 @@ function renderUser(allUser) {
     for (let user of allUser) {
         singleUserInfo +=
             `
-                <div class='user-info' onclick='selectUser(${user.id}
-                    )' > 
+                <div class='single-user-info' 
+                data-class='${user.id}'
+                onclick='selectUser(${user.id})' >
                      ${user.firstName}
                      ${user.lastName}
                 </div >
             `
     }
     usersList.innerHTML = singleUserInfo;
-    let userInfo = document.querySelector('.user-info');
-    //დინამიურად შექმნილი user-info შევინახე ცვლადში მაგრამ ამ ფუნქციის გარეთ არ მუშაობს და ქვემოთ, ფუნქციაში ფერს ვერ ვუცვლი
-    // console.log(userInfo)
 }
 
 function selectUser(id) {
     getTodoByUserId(id)
-    // userInfo.style.backgroundColor = 'rgb(20, 125, 170)';
+    const singleUser = document.querySelector(`single-user-info[data-id='${id}']`);
+    singleUser.classList.add('active'); // ამას წერს და რა ვუშველო? 
+    // Uncaught TypeError: Cannot read properties of null (reading 'classList')
+    console.log(singleUser)
 }
 
 
@@ -52,11 +53,11 @@ function getTodoByUserId(id) {
             todos = _todos;
             renderTodo(todos);
         });
-    }
-    function renderTodo(allTodo) {
-        const toDoList = document.getElementById('content');
-        let toDos = '';
-        for (let todo of allTodo) {
+}
+function renderTodo(allTodo) {
+    const toDoList = document.getElementById('content');
+    let toDos = '';
+    for (let todo of allTodo) {
         toDos +=
             `
             <form class='todo-form'>
