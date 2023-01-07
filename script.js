@@ -38,33 +38,17 @@ function renderUser(allUser) {
 function selectUser(id) {
     getTodoByUserId(id)
     assignActiveClass(id)
+    // markFinishedTasks()
 
 }
 function assignActiveClass(id) {
-    let usersList = document.getElementById('employees-list');
+    const usersList = document.getElementsByClassName('single-user-info');
+    for (let customer of usersList) {
+        customer.classList.remove('active')
+    }
     let user = document.querySelector(`.single-user-info[data-id='${id}']`);
     user.classList.add('active')
-    console.log(user)
 }
-
-//!აგდებს ერორს usersList is not iterable
-// function handleUserClick(id) {
-//     let usersList = document.getElementById('employees-list');
-//     for (let user of usersList) {
-//         user.classList.remove('active')
-//     }
-
-//     let user = document.querySelector(`.single-user-info[data-id='${id}']`);
-//     user.classList.add('active');
-// }
-// function registerEventListeners() {
-//     let usersList = document.getElementById('employees-list');
-//     usersList.addEventListener('click', (event) => {
-//         handleUserClick(event.target.dataset.id)
-//     })
-
-// }
-
 
 //* get all todo's
 function getTodoByUserId(id) {
@@ -83,8 +67,9 @@ function renderTodo(allTodo) {
         toDos +=
             `
             <form class='todo-form'>
-                 <input type="checkbox" name="" id="">
-                 <label class='todo-txt' 
+                 <input type="checkbox">
+                 <label class='todo-txt '
+                        data-done='${todo.completed}' 
                         data-id = 'tasks' >${todo.todo}</label>
                  <div class='icons'>
                      <span class="material-symbols-outlined icon delete">delete</span>
@@ -92,13 +77,18 @@ function renderTodo(allTodo) {
                  </div>
             </form>
             `
-        // console.log(todo.completed)
-        // if (todo.completed === true) {
-        // }
-        // let dlt = document.getElementsByClassName('delete')
-        // dlt.addEventListener('click', deleteTask(`${todo.todo}`))
     }
+
     toDoList.innerHTML = toDos;
+    let task = document.querySelector('.todo-txt')
+    // let done = document.querySelector(`.todo-txt[data-done='${todo.completed}']`)
+    markTasks(task)
+    console.log(done)
+
+}
+function markTasks(task) {
+    // task.style.textDecoration='line-through'
+    task.classList.add('completed')
 }
 
 //* add new todo 

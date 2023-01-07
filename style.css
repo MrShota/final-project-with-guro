@@ -175,7 +175,7 @@ background-color: #C2D0E3;
     width: 400px;
     margin: 20%;
 }
-.completed{
+.todo-txt.completed{
     text-decoration: line-through;
 }
 .single-user-info.active{
