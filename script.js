@@ -33,30 +33,37 @@ function renderUser(allUser) {
             `
     }
     usersList.innerHTML = singleUserInfo;
-    registerEventListeners()
 }
 //*select user and assign todos
 function selectUser(id) {
     getTodoByUserId(id)
+    assignActiveClass(id)
+
+}
+function assignActiveClass(id) {
+    let usersList = document.getElementById('employees-list');
+    let user = document.querySelector(`.single-user-info[data-id='${id}']`);
+    user.classList.add('active')
+    console.log(user)
 }
 
 //!აგდებს ერორს usersList is not iterable
-function handleUserClick(id) {
-    const usersList = document.getElementById('employees-list');
-    for (let user of usersList) {
-        user.classList.remove('active')
-    }
+// function handleUserClick(id) {
+//     let usersList = document.getElementById('employees-list');
+//     for (let user of usersList) {
+//         user.classList.remove('active')
+//     }
 
-    const user = document.querySelector(`.single-user-info[data-id='${id}']`);
-    user.classList.add('active');
-}
-function registerEventListeners() {
-    const usersList = document.getElementById('employees-list');
-    usersList.addEventListener('click', (event) => {
-        handleUserClick(event.target.dataset.id)
-    })
+//     let user = document.querySelector(`.single-user-info[data-id='${id}']`);
+//     user.classList.add('active');
+// }
+// function registerEventListeners() {
+//     let usersList = document.getElementById('employees-list');
+//     usersList.addEventListener('click', (event) => {
+//         handleUserClick(event.target.dataset.id)
+//     })
 
-}
+// }
 
 
 //* get all todo's

@@ -178,7 +178,7 @@ background-color: #C2D0E3;
 .completed{
     text-decoration: line-through;
 }
-.active{
+.single-user-info.active{
     background-color: rgb(20, 125, 170);
 }
 
