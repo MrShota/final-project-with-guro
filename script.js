@@ -33,14 +33,29 @@ function renderUser(allUser) {
             `
     }
     usersList.innerHTML = singleUserInfo;
+    registerEventListeners()
 }
-
+//*select user and assign todos
 function selectUser(id) {
     getTodoByUserId(id)
-    const singleUser = document.querySelector(`single-user-info[data-id='${id}']`);
-    // singleUser.classList.add('active'); // ამას წერს და რა ვუშველო? 
-    // Uncaught TypeError: Cannot read properties of null (reading 'classList')
-    console.log()
+}
+
+//!აგდებს ერორს usersList is not iterable
+function handleUserClick(id) {
+    const usersList = document.getElementById('employees-list');
+    for (let user of usersList) {
+        user.classList.remove('active')
+    }
+
+    const user = document.querySelector(`.single-user-info[data-id='${id}']`);
+    user.classList.add('active');
+}
+function registerEventListeners() {
+    const usersList = document.getElementById('employees-list');
+    usersList.addEventListener('click', (event) => {
+        handleUserClick(event.target.dataset.id)
+    })
+
 }
 
 
@@ -91,10 +106,10 @@ function addNewTodo(todo) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(todo)
     })
-    .then(res => res.json())
-    .then(todo => {
-        todos.push(todo)
-        renderTodo()
-    });
-    
+        .then(res => res.json())
+        .then(todo => {
+            todos.push(todo)
+            renderTodo()
+        });
+
 }
