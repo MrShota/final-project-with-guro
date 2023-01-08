@@ -3,9 +3,6 @@ const wellcome = document.getElementById('wellcome-text')
 
 //*calling functions
 getUsersData();
-renderUser();
-getTodoByUserId();
-
 
 //*get all user from server
 function getUsersData() {
@@ -25,10 +22,10 @@ function renderUser(allUser) {
         singleUserInfo +=
             `
                 <div class='single-user-info' 
-                data-id='${user.id}'
-                onclick='selectUser(${user.id})' >
-                     ${user.firstName}
-                     ${user.lastName}
+                    data-id='${user.id}'
+                    onclick='selectUser(${user.id})' >
+                           ${user.firstName}
+                           ${user.lastName}
                 </div >
             `
     }
@@ -66,47 +63,47 @@ function renderTodo(allTodo) {
     for (let todo of allTodo) {
         toDos +=
             `
-            <form class='todo-form'>
-                 <input type="checkbox">
-                 <label class='todo-txt '
-                        data-done='${todo.completed}' 
-                        data-id = 'tasks' >${todo.todo}</label>
-                 <div class='icons'>
+        <form class='todo-form'>
+              <input type="checkbox">
+              <label class='todo-txt '
+                     data-done='${todo.completed}'
+                     data-id = '${todo.id}' 
+                     data-task='${todo.todo}'
+                     onclick='selectTodo(${todo.completed})'>
+                            ${todo.todo}
+               </label>
+               <div class='icons'>
                      <span class="material-symbols-outlined icon delete">delete</span>
                      <span class="material-symbols-outlined icon edit">edit</span>
-                 </div>
-            </form>
+                </div>
+        </form>
             `
+        console.log(`${todo.id},${todo.completed}, ${todo.todo} `)
+        let task = `${todo.todo}`
+        console.log(task)
+       
     }
 
+
     toDoList.innerHTML = toDos;
-    let task = document.querySelector('.todo-txt')
-    // let done = document.querySelector(`.todo-txt[data-done='${todo.completed}']`)
-    markTasks(task)
-    console.log(done)
-
-}
-function markTasks(task) {
-    // task.style.textDecoration='line-through'
-    task.classList.add('completed')
 }
 
-//* add new todo 
+//* add new todo
 //ლოგიკურად ვითომ სწორია მაგრამ არ მუშაიბს :@
-let inputTodo = document.getElementById('input').innerText;
-const inputBtn = document.getElementsByClassName('input-btn');
-inputBtn.addEventListener('click', addNewTodo(inputTodo))
+// let inputTodo = document.getElementById('input').innerText;
+// const inputBtn = document.getElementsByClassName('input-btn');
+// inputBtn.addEventListener('click', addNewTodo(inputTodo))
 
-function addNewTodo(todo) {
-    fetch(`${API_URL}/todos/add`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(todo)
-    })
-        .then(res => res.json())
-        .then(todo => {
-            todos.push(todo)
-            renderTodo()
-        });
+// function addNewTodo(todo) {
+//     fetch(`${API_URL}/todos/add`, {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify(todo)
+//     })
+//         .then(res => res.json())
+//         .then(todo => {
+//             todos.push(todo)
+//             renderTodo()
+//         });
 
-}
+// }
