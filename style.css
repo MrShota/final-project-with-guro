@@ -147,7 +147,7 @@ body {
     /* font-size: 1rem; */
     border-bottom: 1px solid lightblue;
 }
-.todo-txt{
+#todo-txt{
     font-size: 1.25rem;
 }
 .todo-form:hover{
@@ -156,7 +156,7 @@ background-color: #C2D0E3;
 .todo-form span {
     font-size: 30px;
 }
-.todo-txt{
+#todo-txt{
     width: 80%;
     margin-left: 20px;
 }

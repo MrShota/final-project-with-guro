@@ -39,8 +39,6 @@ function renderUser(allUser) {
 function selectUser(id) {
     getTodoByUserId(id)
     assignActiveClass(id)
-    // markFinishedTasks()
-
 }
 function assignActiveClass(id) {
     const usersList = document.getElementsByClassName('single-user-info');
@@ -61,20 +59,25 @@ function getTodoByUserId(id) {
             renderTodo(todos);
         });
 }
-function renderTodo(){
+function renderTodo() {
     const toDoList = document.getElementById('content');
     let toDos = '';
-    for (let todo of todos ){
+    for (let todo of todos) {
         toDos +=
             `
-        <form class='todo-form'>
-              <input type='checkbox'  id=todo-'${todo.id}' ${todo.completed ? 'checked' : ''}>
-              <label for='todo-${todo.id}'
+        <form class='todo-form' >
+              <input type='checkbox' 
+                     class = 'check-btn' 
+                     data-id = '${todo.id}'
+                     id=todo-'${todo.id}' ${todo.completed ? 'checked' : ''}>
+              <label id = 'todo-txt'
+                     onclick = 'markAsCompleted(${todo.id})' 
+                     for='todo-${todo.id}'
                      class= '${todo.completed ? 'completed' : ''}'
                      data-done='${todo.completed}'
                      data-id = '${todo.id}' 
                      data-task='${todo.todo}'>
-                            ${todo.todo}
+                                        ${todo.todo}
                </label>
                <div class='icons'>
                      <span class="material-symbols-outlined icon delete" onclick = 'deleteTask(event,${todo.id})'>delete</span>
@@ -86,7 +89,13 @@ function renderTodo(){
     }
     toDoList.innerHTML = toDos;
 }
-function deleteTask(event, id){
+function markAsCompleted(id) {
+    let userTask = document.querySelector(`#todo-txt[data-id='${id}']`);
+    userTask.classList.add('completed');
+
+    document.querySelector(`.check-btn[data-id = '${id}']`).checked=true;
+}
+function deleteTask(event, id) {
     event.stopPropagation();
 
     fetch(`${API_URL}/todos/${id}`, {
