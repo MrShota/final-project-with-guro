@@ -175,9 +175,8 @@ background-color: #C2D0E3;
     width: 400px;
     margin: 20%;
 }
-.todo-txt.completed{
+.completed{
     text-decoration: line-through;
-    color: yellow;
 }
 .single-user-info.active{
     background-color: rgb(20, 125, 170);

@@ -1,5 +1,9 @@
 const API_URL = 'https://dummyjson.com';
 const wellcome = document.getElementById('wellcome-text')
+const btnAll = document.getElementById('btn-all');
+const btnActive = document.getElementById('btn-active');
+const btnCompleted = document.getElementById('btn-completed');
+
 
 //*calling functions
 getUsersData();
@@ -57,36 +61,45 @@ function getTodoByUserId(id) {
             renderTodo(todos);
         });
 }
-function renderTodo(allTodo) {
+function renderTodo(){
     const toDoList = document.getElementById('content');
     let toDos = '';
-    for (let todo of allTodo) {
+    for (let todo of todos ){
         toDos +=
             `
         <form class='todo-form'>
-              <input type="checkbox">
-              <label class='todo-txt '
+              <input type='checkbox'  id=todo-'${todo.id}' ${todo.completed ? 'checked' : ''}>
+              <label for='todo-${todo.id}'
+                     class= '${todo.completed ? 'completed' : ''}'
                      data-done='${todo.completed}'
                      data-id = '${todo.id}' 
-                     data-task='${todo.todo}'
-                     onclick='selectTodo(${todo.completed})'>
+                     data-task='${todo.todo}'>
                             ${todo.todo}
                </label>
                <div class='icons'>
-                     <span class="material-symbols-outlined icon delete">delete</span>
+                     <span class="material-symbols-outlined icon delete" onclick = 'deleteTask(event,${todo.id})'>delete</span>
                      <span class="material-symbols-outlined icon edit">edit</span>
                 </div>
         </form>
-            `
-        console.log(`${todo.id},${todo.completed}, ${todo.todo} `)
-        let task = `${todo.todo}`
-        console.log(task)
-       
+    `
+        // console.log(`${todo.completed}`)
     }
-
-
     toDoList.innerHTML = toDos;
 }
+function deleteTask(event, id){
+    event.stopPropagation();
+
+    fetch(`${API_URL}/todos/${id}`, {
+        method: 'DELETE',
+    })
+        .then(res => res.json())
+        .then(data => {
+            todos = todos.filter(todo => todo.id != data.id)
+            renderTodo();
+        });
+
+}
+
 
 //* add new todo
 //ლოგიკურად ვითომ სწორია მაგრამ არ მუშაიბს :@
